@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thư viện số cá nhân – Bùi Thị Hậu (PK04558)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f6;--surface:#fff;--ink:#12202b;--mute:#52667a;--line:#d3dde5;--blue:#0f5fa8;--orange:#e8650f;--shelf:#c9a66b;--glow:rgba(15,95,168,.12);
+--f1:'Bricolage Grotesque','Segoe UI',sans-serif;--f2:'Be Vietnam Pro','Segoe UI',Arial,sans-serif}
+:root[data-theme=dark]{--bg:#0a141d;--surface:#122232;--ink:#e6eef5;--mute:#93a8bb;--line:#243a4e;--blue:#5aaaf0;--orange:#ff8a3d;--shelf:#7a5f33;--glow:rgba(90,170,240,.14)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--bg);color:var(--ink);font:16px/1.7 var(--f2);transition:background .5s,color .5s}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+#bar{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--blue),var(--orange));z-index:50}
+header{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px clamp(16px,4vw,48px);background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font:800 1.15rem var(--f1)}.logo i{color:var(--orange);font-style:normal}
+.tools{display:flex;align-items:center;gap:10px}
+.count{font-size:.85rem;color:var(--mute);border:1px solid var(--line);padding:4px 12px;border-radius:99px}
+button{font:inherit;cursor:pointer;color:inherit}
+#theme{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:1.2rem;transition:transform .5s}
+#theme:hover{transform:rotate(25deg) scale(1.08)}
+.hero{position:relative;overflow:hidden;padding:clamp(40px,8vw,96px) clamp(16px,4vw,48px) 0;text-align:left}
+.hero h1{font:800 clamp(2.2rem,6vw,4.4rem)/1.05 var(--f1);max-width:14ch;letter-spacing:-.02em}
+.hero p{max-width:56ch;color:var(--mute);margin-top:18px;min-height:3.4em}
+.hero p b{color:var(--orange);font-weight:600}
+.caret{display:inline-block;width:2px;height:1.1em;background:var(--orange);vertical-align:-3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.bits{position:absolute;inset:0;pointer-events:none;z-index:0}
+.bits span{position:absolute;font:600 1rem monospace;color:var(--blue);opacity:.14;animation:fl linear infinite}
+@keyframes fl{from{transform:translateY(0)}to{transform:translateY(-110vh)}}
+.hero>*:not(.bits){position:relative;z-index:1}
+.shelf{margin-top:48px;display:flex;align-items:flex-end;gap:6px;padding:0 8px;overflow-x:auto;scrollbar-width:none}
+.spine{flex:0 0 auto;width:clamp(48px,8vw,78px);height:clamp(200px,28vw,270px);writing-mode:vertical-rl;display:flex;align-items:center;justify-content:space-between;padding:16px 8px;border-radius:6px 6px 2px 2px;color:#fff;font:700 .88rem var(--f1);background:hsl(var(--h) 62% 36%);border-top:6px solid hsl(var(--h) 70% 60%);box-shadow:inset -6px 0 0 rgba(0,0,0,.14);transform-origin:bottom;transition:transform .35s cubic-bezier(.3,1.6,.5,1),box-shadow .35s;animation:rise .7s cubic-bezier(.2,1.2,.4,1) backwards;animation-delay:calc(var(--i)*90ms)}
+.spine:nth-child(even){height:clamp(220px,31vw,300px)}
+.spine:nth-child(3n){height:clamp(180px,25vw,240px)}
+.spine small{font-weight:500;opacity:.8}
+.spine:hover,.spine:focus-visible{transform:translateY(-22px) rotate(-2deg);box-shadow:0 18px 30px rgba(0,0,0,.35),inset -6px 0 0 rgba(0,0,0,.14)}
+.spine.done::after{content:"✓";writing-mode:horizontal-tb;position:absolute}
+@keyframes rise{from{transform:translateY(120%) rotate(8deg);opacity:0}}
+.plank{height:16px;background:var(--shelf);border-radius:3px;box-shadow:0 8px 0 rgba(0,0,0,.12)}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px;padding:48px clamp(16px,4vw,48px) 80px;max-width:1240px;margin:auto}
+nav{position:sticky;top:84px;align-self:start;display:flex;flex-direction:column;gap:2px}
+nav h2{font:700 1.05rem var(--f1);margin-bottom:10px}
+nav a{padding:8px 12px;border-left:3px solid var(--line);color:var(--mute);font-size:.93rem;transition:.25s}
+nav a:hover{color:var(--ink);padding-left:18px}
+nav a.on{border-color:var(--orange);color:var(--ink);font-weight:600;background:var(--glow)}
+nav a.ok::after{content:" ✓";color:var(--blue)}
+section{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,40px);margin-bottom:28px;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+section.in{opacity:1;transform:none}
+section .meta{color:var(--mute);font-size:.88rem;margin-bottom:6px}
+section h3{font:800 clamp(1.5rem,3vw,2.1rem)/1.15 var(--f1);margin-bottom:12px;border-left:8px solid hsl(var(--h) 65% 50%);padding-left:14px}
+.lead{max-width:68ch}
+details{border:1px solid var(--line);border-radius:12px;margin-top:12px;overflow:hidden;transition:background .3s}
+details[open]{background:var(--glow)}
+summary{padding:13px 16px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--orange);transition:transform .3s}
+details[open] summary::after{transform:rotate(135deg)}
+details p{padding:0 16px 14px;color:var(--mute);max-width:68ch;animation:dn .35s}
+@keyframes dn{from{opacity:0;transform:translateY(-6px)}}
+.quiz{margin-top:20px;padding:16px;border-radius:12px;background:var(--bg);border:1px dashed var(--line)}
+.quiz b{display:block;margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);transition:.25s}
+.opts button:hover{border-color:var(--blue);transform:translateY(-2px)}
+.opts .right{background:#1f9d55;color:#fff;border-color:#1f9d55}
+.opts .wrong{background:#d64545;color:#fff;border-color:#d64545;animation:sh .4s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{margin-top:10px;font-size:.92rem;color:var(--mute);min-height:1.4em}
+.mark{margin-top:20px;padding:10px 18px;border-radius:99px;border:2px solid var(--blue);background:none;font-weight:600;transition:.3s}
+.mark:hover,.mark.on{background:var(--blue);color:var(--bg)}
+footer{text-align:center;padding:36px 16px;color:var(--mute);border-top:1px solid var(--line);font-size:.9rem}
+#top{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:0;background:var(--orange);color:#fff;font-size:1.2rem;opacity:0;pointer-events:none;transition:.3s;z-index:40}
+#top.show{opacity:1;pointer-events:auto}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:12px 22px;border-radius:99px;transition:transform .5s cubic-bezier(.3,1.5,.5,1);z-index:60}
+#toast.show{transform:translate(-50%,0)}
+@media(max-width:860px){.layout{grid-template-columns:1fr;padding-top:24px}
+nav{position:sticky;top:68px;z-index:30;flex-direction:row;overflow-x:auto;background:var(--bg);padding:8px 0;gap:6px;scrollbar-width:none}
+nav h2{display:none}nav a{white-space:nowrap;border:1px solid var(--line);border-radius:99px;padding:6px 14px}nav a:hover{padding-left:14px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}section{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<header>
+  <a class="logo" href="#top-page">Thư viện số<i>.</i>cá nhân</a>
+  <div class="tools"><span class="count" id="count">Đã học 0/8</span>
+  <button id="theme" aria-label="Đổi chế độ sáng/tối">🌙</button></div>
+</header>
+
+<div class="hero" id="top-page">
+  <div class="bits" id="bits" aria-hidden="true"></div>
+  <h1 id="title">Thư viện số cá nhân</h1>
+  <p><b id="owner">Tên của bạn</b> · <span id="info"></span><br><span id="typed"></span><span class="caret"></span></p>
+  <div class="shelf" id="shelf"></div>
+  <div class="plank"></div>
+</div>
+
+<div class="layout">
+  <nav id="toc"><h2>Mục lục</h2></nav>
+  <main id="main"></main>
+</div>
+<footer>Thư viện số cá nhân · Bùi Thị Hậu · PK04558 · Lập trình Web</footer>
+<button id="top" aria-label="Lên đầu trang">↑</button>
+<div id="toast"></div>
+
+<script>
+/* ====== SỬA Ở ĐÂY ====== */
+const OWNER = "Bùi Thị Hậu";            // họ tên
+const MSSV = "PK04558";                 // mã sinh viên
+const MAJOR = "Lập trình Web";          // ngành học
+const SLOGAN = ["Học số để làm chủ công nghệ.","Mỗi chủ đề là một cuốn sách trên kệ.","Ôn nhanh, hiểu sâu, nhớ lâu."];
+
+/* ====== NỘI DUNG 8 CHỦ ĐỀ (theo đúng tên 8 slide) ====== */
+const BOOKS=[
+{t:"Tổng quan CMCN 4.0, CNTT 4.0, CĐS",s:"Bức tranh lớn",h:210,
+ lead:"Công nghệ thay đổi cách con người sản xuất và sống qua từng giai đoạn. Hiểu bối cảnh này giúp bạn biết vì sao mình phải học kỹ năng số ngay từ năm nhất.",
+ c:[["Bốn cuộc cách mạng công nghiệp","Máy hơi nước → điện và dây chuyền → máy tính và tự động hóa → kết nối vật lý với số (AI, IoT, dữ liệu lớn). Mỗi bước làm năng suất tăng vọt và đổi luôn nghề nghiệp."],
+    ["Chuyển đổi số là gì?","Không chỉ mua phần mềm. Đó là đổi cách làm việc, cách ra quyết định và trải nghiệm khách hàng dựa trên dữ liệu và công nghệ."],
+    ["Số hóa ≠ chuyển đổi số","Số hóa: biến giấy thành file. Số hóa quy trình: chạy quy trình trên hệ thống. Chuyển đổi số: thay đổi mô hình hoạt động."]],
+ q:["Quét tài liệu giấy thành PDF thuộc mức nào?",["Số hóa","Chuyển đổi số"],0,"Đúng: mới chỉ là số hóa dữ liệu, chưa đổi cách vận hành."]},
+{t:"Computer, Hardware",s:"Phần cứng",h:25,
+ lead:"Máy tính là tập hợp các linh kiện phối hợp theo chu trình nhập – xử lý – lưu – xuất. Biết vai trò từng linh kiện giúp bạn chọn laptop và sửa lỗi chậm máy.",
+ c:[["CPU: bộ não xử lý","Thực thi lệnh. Số nhân, số luồng và xung nhịp ảnh hưởng tốc độ khi làm nhiều việc cùng lúc."],
+    ["RAM và ổ lưu trữ","RAM là bàn làm việc tạm, tắt máy là mất. SSD/HDD là tủ hồ sơ, giữ dữ liệu lâu dài. SSD nhanh hơn HDD rất nhiều."],
+    ["GPU và thiết bị vào/ra","GPU xử lý đồ họa và tính toán song song (game, AI). Chuột, bàn phím, màn hình, máy in là các cổng giao tiếp với người dùng."]],
+ q:["Mở nhiều tab trình duyệt làm máy giật, nên kiểm tra thành phần nào đầu tiên?",["RAM","Màn hình"],0,"Đúng: RAM đầy khiến máy phải dùng ổ cứng thay thế nên chậm."]},
+{t:"Operating System",s:"Hệ điều hành",h:150,
+ lead:"Hệ điều hành là người quản lý tài nguyên: giữa phần cứng và ứng dụng luôn có nó điều phối.",
+ c:[["Bốn nhiệm vụ chính","Quản lý tiến trình (chương trình đang chạy), bộ nhớ, hệ thống tệp và thiết bị ngoại vi."],
+    ["Các họ hệ điều hành","Windows và macOS cho máy tính cá nhân, Linux cho máy chủ và lập trình, Android và iOS cho di động."],
+    ["Kernel và giao diện","Kernel là lõi làm việc trực tiếp với phần cứng; giao diện (GUI hay dòng lệnh) là lớp để người dùng ra lệnh."]],
+ q:["Công cụ nào của Windows giúp tắt chương trình bị treo?",["Task Manager","Notepad"],0,"Đúng: Task Manager (Ctrl+Shift+Esc) quản lý tiến trình đang chạy."]},
+{t:"Software, Cloud, Platform",s:"Phần mềm & đám mây",h:280,
+ lead:"Phần mềm không còn nằm trong máy bạn: nó chạy trên đám mây và được dùng như dịch vụ.",
+ c:[["Phần mềm hệ thống và ứng dụng","Hệ thống: hệ điều hành, trình điều khiển. Ứng dụng: trình soạn thảo, trình duyệt, phần mềm học tập."],
+    ["Ba mô hình đám mây","IaaS: thuê hạ tầng (máy chủ ảo). PaaS: thuê nền tảng để lập trình. SaaS: dùng phần mềm sẵn có qua trình duyệt."],
+    ["Nền tảng (platform)","Nơi nhiều bên cùng tạo giá trị: kho ứng dụng, mạng học trực tuyến, API mở."]],
+ q:["Google Docs thuộc mô hình nào?",["SaaS","IaaS"],0,"Đúng: dùng thẳng phần mềm qua trình duyệt, không cần cài hay quản lý hạ tầng."]},
+{t:"Network, Internet, IoT",s:"Mạng & kết nối",h:185,
+ lead:"Internet là mạng của các mạng. Mọi dịch vụ bạn dùng hằng ngày đều dựa trên việc các thiết bị biết tìm và nói chuyện với nhau.",
+ c:[["LAN, WAN và thiết bị mạng","LAN là mạng cục bộ (WiFi ký túc xá), WAN trải rộng. Router chọn đường đi, switch nối thiết bị trong LAN."],
+    ["Địa chỉ IP và DNS","IP là địa chỉ của thiết bị. DNS như danh bạ: đổi tên miền dễ nhớ thành địa chỉ IP."],
+    ["HTTPS và IoT","HTTPS mã hóa dữ liệu truyền đi. IoT là vạn vật có cảm biến và kết nối mạng, ví dụ khóa cửa thông minh."]],
+ q:["DNS làm nhiệm vụ gì?",["Đổi tên miền thành địa chỉ IP","Tăng tốc WiFi"],0,"Đúng: nhờ DNS bạn gõ tên trang web thay vì dãy số."]},
+{t:"Computational Thinking, IT Automation",s:"Tư duy & tự động hóa",h:340,
+ lead:"Tư duy máy tính là cách giải quyết vấn đề có hệ thống, và là nền để bạn tự động hóa việc lặp lại.",
+ c:[["Bốn trụ cột","Phân rã (chia nhỏ vấn đề), nhận dạng mẫu, trừu tượng hóa (bỏ chi tiết thừa), thiết kế thuật toán (các bước giải)."],
+    ["Thuật toán","Dãy bước rõ ràng, hữu hạn, cho kết quả đúng. Có thể mô tả bằng lưu đồ hay mã giả trước khi viết code."],
+    ["Tự động hóa CNTT","Dùng script, lịch chạy tự động hoặc RPA để máy làm thay việc lặp lại như đổi tên hàng trăm file hay sao lưu."]],
+ q:["Chia bài toán lớn thành các bài toán nhỏ gọi là gì?",["Phân rã","Trừu tượng hóa"],0,"Đúng: phân rã giúp từng phần dễ giải hơn."]},
+{t:"AI, Data in Studying & Working",s:"AI & dữ liệu",h:45,
+ lead:"AI là công cụ khuếch đại năng lực, nhưng chỉ khi bạn biết hỏi đúng và kiểm chứng kết quả.",
+ c:[["AI, học máy, AI sinh nội dung","AI là khái niệm rộng; học máy học từ dữ liệu; AI sinh nội dung tạo văn bản, ảnh, mã nguồn từ câu lệnh (prompt)."],
+    ["Dữ liệu → thông tin → tri thức","Dữ liệu thô chỉ có giá trị khi được làm sạch, phân tích và gắn với bối cảnh để ra quyết định."],
+    ["Dùng AI có trách nhiệm","Nêu rõ mục tiêu trong prompt, luôn kiểm tra nguồn, AI có thể bịa thông tin. Không nộp bài do AI làm mà không hiểu."]],
+ q:["AI trả lời rất tự tin thì chắc chắn đúng?",["Không, cần kiểm chứng","Có"],0,"Đúng: AI có thể tạo ra thông tin sai nhưng nghe rất thuyết phục."]},
+{t:"An toàn thông tin & Đạo đức số",s:"An toàn & đạo đức",h:0,
+ lead:"Bảo vệ tài khoản của mình và tôn trọng người khác trên không gian mạng là kỹ năng sống còn của công dân số.",
+ c:[["Tài khoản vững chắc","Mật khẩu dài và khác nhau cho mỗi dịch vụ, dùng trình quản lý mật khẩu và bật xác thực hai lớp (2FA)."],
+    ["Nhận diện lừa đảo","Thư, tin nhắn giả mạo thường gây áp lực hoặc hứa trúng thưởng. Kiểm tra người gửi, đường link rồi mới bấm."],
+    ["Đạo đức và bản quyền","Trích dẫn nguồn, không đạo văn, không chia sẻ ảnh hay dữ liệu cá nhân của người khác khi chưa được phép. Mọi thứ đăng lên đều để lại dấu chân số."]],
+ q:["Nhận tin nhắn 'bạn trúng thưởng, bấm link nhận quà', bạn nên làm gì?",["Bấm ngay","Không bấm, kiểm tra và báo cáo"],1,"Đúng: đó là dấu hiệu điển hình của lừa đảo (phishing)."]}
+];
+
+const $=s=>document.querySelector(s), root=document.documentElement;
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* --- Chế độ sáng/tối --- */
+function setTheme(t){root.dataset.theme=t;$('#theme').textContent=t==='dark'?'☀️':'🌙';store.set('theme',t)}
+setTheme(store.get('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+$('#theme').onclick=()=>setTheme(root.dataset.theme==='dark'?'light':'dark');
+
+$('#owner').textContent=OWNER;
+$('#info').textContent=`MSSV ${MSSV} · ${MAJOR} · FPT Polytechnic năm nhất`;
+
+/* --- Dựng kệ sách, mục lục, nội dung --- */
+let done=new Set(JSON.parse(store.get('done')||'[]'));
+const shelf=$('#shelf'),toc=$('#toc'),main=$('#main');
+BOOKS.forEach((b,i)=>{
+  const id='s'+(i+1);
+  shelf.insertAdjacentHTML('beforeend',`<a class="spine" href="#${id}" style="--h:${b.h};--i:${i}" data-id="${id}"><span>${b.t.split(',')[0]}</span><small>Sách ${i+1}</small></a>`);
+  toc.insertAdjacentHTML('beforeend',`<a href="#${id}" data-id="${id}">${i+1}. ${b.s}</a>`);
+  main.insertAdjacentHTML('beforeend',`<section id="${id}" style="--h:${b.h}"><div class="meta">Slide ${i+1} · ${b.s}</div><h3>${b.t}</h3><p class="lead">${b.lead}</p>
+  ${b.c.map(c=>`<details><summary>${c[0]}</summary><p>${c[1]}</p></details>`).join('')}
+  <div class="quiz"><b>Tự kiểm tra: ${b.q[0]}</b><div class="opts">${b.q[1].map((o,k)=>`<button data-k="${k}">${o}</button>`).join('')}</div><div class="fb"></div></div>
+  <button class="mark" data-id="${id}">Đánh dấu đã học</button></section>`);
+});
+
+/* --- Trắc nghiệm nhanh --- */
+main.addEventListener('click',e=>{
+  const o=e.target.closest('.opts button');
+  if(o){const i=[...main.children].indexOf(o.closest('section')),q=BOOKS[i].q,ok=+o.dataset.k===q[2];
+    o.classList.add(ok?'right':'wrong');o.closest('.quiz').querySelector('.fb').textContent=ok?q[3]:'Chưa đúng, thử lại nhé!';}
+  const m=e.target.closest('.mark');
+  if(m){done.has(m.dataset.id)?done.delete(m.dataset.id):done.add(m.dataset.id);store.set('done',JSON.stringify([...done]));sync(true)}
+});
+
+/* --- Tiến độ học --- */
+function sync(msg){
+  $('#count').textContent=`Đã học ${done.size}/8`;
+  document.querySelectorAll('[data-id]').forEach(el=>{const d=done.has(el.dataset.id);
+    if(el.classList.contains('mark')){el.classList.toggle('on',d);el.textContent=d?'✓ Đã học xong':'Đánh dấu đã học'}
+    else{el.classList.toggle('ok',d);el.classList.toggle('done',d)}});
+  if(msg&&done.size===8)toast('🎉 Bạn đã đọc hết cả 8 cuốn trên kệ!');
+}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3000)}
+sync();
+
+/* --- Hiệu ứng gõ chữ --- */
+let si=0,ci=0,del=false;
+(function type(){const s=SLOGAN[si];$('#typed').textContent=s.slice(0,ci);
+  if(!del&&ci===s.length){del=true;return setTimeout(type,1600)}
+  if(del&&ci===0){del=false;si=(si+1)%SLOGAN.length}
+  ci+=del?-1:1;setTimeout(type,del?25:55)})();
+
+/* --- Hạt số 0/1 bay --- */
+const bits=$('#bits');
+for(let i=0;i<22;i++){const s=document.createElement('span');s.textContent=Math.random()>.5?'1':'0';
+  s.style.cssText=`left:${Math.random()*100}%;top:${60+Math.random()*60}%;animation-duration:${10+Math.random()*14}s;animation-delay:-${Math.random()*20}s;font-size:${.8+Math.random()*1.2}rem`;bits.appendChild(s)}
+
+/* --- Cuộn: thanh tiến trình, scroll-spy, hiện section, nút lên đầu --- */
+addEventListener('scroll',()=>{
+  const h=root.scrollHeight-innerHeight;$('#bar').style.width=(scrollY/h*100)+'%';
+  $('#top').classList.toggle('show',scrollY>600)},{passive:true});
+$('#top').onclick=()=>scrollTo({top:0});
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');
+    toc.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.dataset.id===e.target.id))}}),{rootMargin:'-30% 0px -55% 0px'});
+document.querySelectorAll('section').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
